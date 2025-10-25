@@ -2,7 +2,6 @@
 
 #include <stack>
 
-#include "Input.h"
 #include "Window.h"
 #include "Layer.h"
 
@@ -22,7 +21,7 @@ namespace Core {
     ~Application();
 
     void run();
-    void shutdown();
+    static void shutdown();
 
     inline void setGraphicsAPI(GraphicsAPI graphicsAPI) { RendererAPI::setAPI(graphicsAPI); }
 
@@ -30,25 +29,25 @@ namespace Core {
     requires(std::is_base_of_v<Layer, TLayer>)
     void pushLayer()
     {
-      m_layerStack.push(std::make_unique<TLayer>());
+      std::unique_ptr<Layer> layer = std::make_unique<TLayer>();
+      layer->onAttach();
+      m_layerStack.push(std::move(layer));
     }
 
-    static void onEvent(const Event& event)
-    {
-      m_input->emit(event);
-      s_changed = true;
-    }
+    static void onEvent(Event& event);
 
     std::pair<uint32_t, uint32_t> getWindowSize() const;
 
     static Application& get();
+
+    inline Window& getWindow() { return *m_window; };
+
     float getTime();
   private:
-    ApplicationSpecification m_specification;
+    static Application* s_application;
     static bool s_running;
-    static bool s_changed;
 
-    static std::shared_ptr<Input> m_input;
+    ApplicationSpecification m_specification;
     std::shared_ptr<Window> m_window;
     std::stack<std::unique_ptr<Layer>> m_layerStack;
   };

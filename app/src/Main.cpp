@@ -1,5 +1,6 @@
-#include "Application.h"
+#include "Core.h"
 
+#include "ImGuiLayer.h"
 #include "AppLayer.h"
 
 int main(int argc, char** argv)
@@ -11,5 +12,6 @@ int main(int argc, char** argv)
 
   Core::Application application(appSpec);
   application.pushLayer<AppLayer>();
+  application.pushLayer<ImGuiLayer>();
   application.run();
 }

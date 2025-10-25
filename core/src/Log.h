@@ -17,9 +17,77 @@ namespace Core {
     static bool s_running;
   };
 
-#define LOG_TRACE(...)   Log::logger()->trace(__VA_ARGS__)
-#define LOG_INFO(...)    Log::logger()->info(__VA_ARGS__)
-#define LOG_WARN(...)    Log::logger()->warn(__VA_ARGS__)
-#define LOG_ERROR(...)   Log::logger()->error(__VA_ARGS__)
+  //// Format strings functions
+  //template<typename... Args>
+  //inline void LOG_TRACE(fmt::format_string<Args...> fmt, Args&&... args)
+  //{
+  //  Log::logger()->trace(fmt, std::forward<Args>(args)...);
+  //};
 
+  //template<typename... Args>
+  //inline void LOG_INFO(fmt::format_string<Args...> fmt, Args&&... args)
+  //{
+  //  Log::logger()->info(fmt, std::forward<Args>(args)...);
+  //};
+
+  //template<typename... Args>
+  //inline void LOG_WARN(fmt::format_string<Args...> fmt, Args&&... args)
+  //{
+  //  Log::logger()->warn(fmt, std::forward<Args>(args)...);
+  //};
+
+  //template<typename... Args>
+  //inline void LOG_ERROR(fmt::format_string<Args...> fmt, Args&&... args)
+  //{
+  //  Log::logger()->error(fmt, std::forward<Args>(args)...);
+  //};
+
+  //// String view functions
+  //template<typename... Args>
+  //inline void LOG_TRACE(std::string_view fmt, Args&&... args)
+  //{
+  //  Log::logger()->trace(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+  //};
+
+  //template<typename... Args>
+  //inline void LOG_INFO(std::string_view fmt, Args&&... args)
+  //{
+  //  Log::logger()->info(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+  //};
+
+  //template<typename... Args>
+  //inline void LOG_WARN(std::string_view fmt, Args&&... args)
+  //{
+  //  Log::logger()->warn(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+  //};
+
+  //template<typename... Args>
+  //inline void LOG_ERROR(std::string_view fmt, Args&&... args)
+  //{
+  //  Log::logger()->error(spdlog::fmt_lib::runtime(fmt), std::forward<Args>(args)...);
+  //};
+
+  template<typename T, typename... Types>
+  inline void LOG_TRACE(T message, Types... args)
+  {
+    Log::logger()->trace(spdlog::fmt_lib::runtime(message), args...);
+  }
+
+  template<typename T, typename... Types>
+  inline void LOG_INFO(T message, Types... args)
+  {
+    Log::logger()->info(spdlog::fmt_lib::runtime(message), args...);
+  }
+
+  template<typename T, typename... Types>
+  inline void LOG_WARN(T message, Types... args)
+  {
+    Log::logger()->warn(spdlog::fmt_lib::runtime(message), args...);
+  }
+
+  template<typename T, typename... Types>
+  inline void LOG_ERROR(T message, Types... args)
+  {
+    Log::logger()->error(spdlog::fmt_lib::runtime(message), args...);
+  }
 }

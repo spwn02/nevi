@@ -20,7 +20,7 @@ namespace Core {
     virtual bool shouldClose() const override { return glfwWindowShouldClose(m_window); }
 
     virtual inline void* get() override { return m_window; }
-    virtual inline std::pair<uint32_t, uint32_t> getWindowSize() override;
+    virtual inline std::pair<int32_t, int32_t> getWindowSize() override;
     virtual inline float getTime() const { return (float)glfwGetTime(); };
 
     virtual void setVSync(bool enabled) override;

@@ -6,6 +6,10 @@
 #include "Application.h"
 #include "OpenGLSetup.h"
 
+#include "events/KeyEvents.h"
+#include "events/MouseEvents.h"
+#include "events/ApplicationEvents.h"
+
 namespace Core {
 
   OpenGLWindow::OpenGLWindow(WindowSpecification specification)
@@ -44,7 +48,7 @@ namespace Core {
           break;
         }
       }
-      });
+    });
 
     glfwSetCharCallback(m_window, [](GLFWwindow* window, unsigned int keycode) {
       KeyTypedEvent event(keycode);
@@ -54,32 +58,60 @@ namespace Core {
     glfwSetCursorPosCallback(m_window, [](GLFWwindow* window, double xpos, double ypos) {
       MouseMovedEvent event(xpos, ypos);
       Application::onEvent(event);
-      });
+    });
 
     glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int button, int action, int mods) {
       switch (action)
       {
-      case GLFW_PRESS:
-      {
-        MouseButtonPressedEvent event(button, mods);
-        Application::onEvent(event);
-        break;
+        case GLFW_PRESS:
+        {
+          MouseButtonPressedEvent event(button, mods);
+          Application::onEvent(event);
+          break;
+        }
+        case GLFW_RELEASE:
+        {
+          MouseButtonReleasedEvent event(button);
+          Application::onEvent(event);
+          break;
+        }
       }
-      case GLFW_RELEASE:
-      {
-        MouseButtonReleasedEvent event(button);
-        Application::onEvent(event);
-        break;
-      }
-      }
-      });
+    });
 
     glfwSetScrollCallback(m_window, [](GLFWwindow* window, double xoffset, double yoffset) {
       MouseScrolledEvent event(xoffset, yoffset);
       Application::onEvent(event);
-      });
+    });
 
     setVSync(m_specification.VSync);
+
+    glfwSetWindowCloseCallback(m_window, [](GLFWwindow* window) {
+      WindowCloseEvent event(window);
+      Application::onEvent(event);
+    });
+
+    glfwSetWindowSizeCallback(m_window, [](GLFWwindow* window, int width, int height) {
+      WindowResizeEvent event(window, width, height);
+      Application::onEvent(event);
+    });
+
+    glfwSetWindowFocusCallback(m_window, [](GLFWwindow* window, int focused) {
+      if (focused == GL_TRUE)
+      {
+        WindowFocusEvent event(window);
+        Application::onEvent(event);
+      }
+      else
+      {
+        WindowLostFocusEvent event(window);
+        Application::onEvent(event);
+      }
+    });
+
+    glfwSetWindowPosCallback(m_window, [](GLFWwindow* window, int xpos, int ypos) {
+      WindowMovedEvent event(window, xpos, ypos);
+      Application::onEvent(event);
+    });
   }
 
   OpenGLWindow::~OpenGLWindow()
@@ -101,7 +133,7 @@ namespace Core {
     glfwPollEvents();
   }
 
-  std::pair<uint32_t, uint32_t> OpenGLWindow::getWindowSize()
+  std::pair<int32_t, int32_t> OpenGLWindow::getWindowSize()
   {
     int width, height;
     glfwGetWindowSize(m_window, &width, &height);

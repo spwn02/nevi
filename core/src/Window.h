@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <numbers>
+#include <stdint.h>
 #include "events/Event.h"
 
 namespace Core {
@@ -27,7 +27,7 @@ namespace Core {
     virtual bool shouldClose() const = 0;
 
     virtual inline void* get() = 0;
-    virtual inline std::pair<uint32_t, uint32_t> getWindowSize() = 0;
+    virtual inline std::pair<int32_t, int32_t> getWindowSize() = 0;
     virtual inline float getTime() const = 0;
 
     virtual inline void setVSync(bool enabled = true) = 0;

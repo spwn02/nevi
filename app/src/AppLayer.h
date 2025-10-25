@@ -1,14 +1,16 @@
 #pragma once
 
-#include "Layer.h"
-#include "renderer/Renderer.h"
-#include "renderer/Shader.h"
+#include <Core.h>
 
 class AppLayer : public Core::Layer
 {
 public:
   AppLayer();
   virtual ~AppLayer() {};
+
+  virtual void onAttach() override;
+  virtual void onDetach() override;
+  virtual void onEvent(Core::Event& event) override;
 
   virtual void onUpdate(float ts) override;
   virtual void onRender() override;

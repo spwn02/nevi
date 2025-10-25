@@ -1,6 +1,6 @@
 #include "OpenGLSetup.h"
 
-#include "Core.h"
+#include "Utils.h"
 
 namespace Core {
 

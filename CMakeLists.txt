@@ -10,8 +10,8 @@ project(App VERSION 1.0)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
 
 # Core library
-file(GLOB_RECURSE SRCS "${CMAKE_SOURCE_DIR}/core/*.cpp")
-file(GLOB_RECURSE HDRS "${CMAKE_SOURCE_DIR}/core/*.h")
+file(GLOB_RECURSE SRCS "core/*.cpp")
+file(GLOB_RECURSE HDRS "core/*.h")
 
 add_library(Core STATIC ${SRCS} ${HDRS})
 
@@ -25,15 +25,18 @@ target_compile_definitions(Core PRIVATE
   "CORE_DEBUG"
 )
 
-target_include_directories(Core PUBLIC "${CMAKE_SOURCE_DIR}/core/src")
+target_include_directories(Core PUBLIC "core" "core/src")
 
 # App
-file(GLOB_RECURSE SRCS "${CMAKE_SOURCE_DIR}/app/*.cpp")
-file(GLOB_RECURSE HDRS "${CMAKE_SOURCE_DIR}/app/*.h")
+file(GLOB_RECURSE SRCS "app/*.cpp")
+file(GLOB_RECURSE HDRS "app/*.h")
 
 add_executable(${PROJECT_NAME} ${SRCS} ${HDRS})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC Core)
 
+target_compile_definitions(${PROJECT_NAME} PUBLIC
+  "_CRT_SECURE_NO_WARNINGS"
+)
 
 add_subdirectory("vendor")

@@ -1,6 +1,8 @@
 #include "Input.h"
 
-#include <functional>
+#include "Application.h"
+
+#include "Utils.h"
 
 namespace Core {
 
@@ -9,17 +11,18 @@ namespace Core {
   Input::Input()
   {
     m_dispatcher->subscribe<KeyPressedEvent>([this](const KeyPressedEvent& e) { this->keyPressedEvent(e); });
-    m_dispatcher->subscribe<KeyReleasedEvent>([this](const KeyReleasedEvent& e) { this->keyReleasedEvent(e); });
-    m_dispatcher->subscribe<KeyTypedEvent>([this](const KeyTypedEvent& e) { this->keyTypedEvent(e); });
-    m_dispatcher->subscribe<MouseMovedEvent>([this](const MouseMovedEvent& e) { this->mouseMovedEvent(e); });
-    m_dispatcher->subscribe<MouseScrolledEvent>([this](const MouseScrolledEvent& e) { this->mouseScrolledEvent(e); });
-    m_dispatcher->subscribe<MouseButtonPressedEvent>([this](const MouseButtonPressedEvent& e) { this->mouseButtonPressedEvent(e); });
-    m_dispatcher->subscribe<MouseButtonReleasedEvent>([this](const MouseButtonReleasedEvent& e) { this->mouseButtonReleasedEvent(e); });
+    //m_dispatcher->subscribe<KeyReleasedEvent>([this](const KeyReleasedEvent& e) { this->keyReleasedEvent(e); });
+    //m_dispatcher->subscribe<KeyTypedEvent>([this](const KeyTypedEvent& e) { this->keyTypedEvent(e); });
+    //m_dispatcher->subscribe<MouseMovedEvent>([this](const MouseMovedEvent& e) { this->mouseMovedEvent(e); });
+    //m_dispatcher->subscribe<MouseScrolledEvent>([this](const MouseScrolledEvent& e) { this->mouseScrolledEvent(e); });
+    //m_dispatcher->subscribe<MouseButtonPressedEvent>([this](const MouseButtonPressedEvent& e) { this->mouseButtonPressedEvent(e); });
+    //m_dispatcher->subscribe<MouseButtonReleasedEvent>([this](const MouseButtonReleasedEvent& e) { this->mouseButtonReleasedEvent(e); });
   }
 
   void Input::keyPressedEvent(const KeyPressedEvent& e)
   {
-    LOG_TRACE(e.toString());
+    if (e.keyCode == 256)
+      Application::shutdown();
   }
 
   void Input::keyReleasedEvent(const KeyReleasedEvent& e)

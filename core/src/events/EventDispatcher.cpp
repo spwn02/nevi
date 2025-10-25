@@ -1,3 +1,7 @@
 #include "EventDispatcher.h"
 
-std::unordered_map<EventType, EventDispatcher::Handler, EnumClassHash> EventDispatcher::m_observers{};
+namespace Core {
+
+  std::unordered_map<EventType, EventDispatcher::Handler, EnumClassHash> EventDispatcher::m_observers{};
+
+}

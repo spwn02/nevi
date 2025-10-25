@@ -3,7 +3,7 @@
 #include <fstream>
 #include <vector>
 
-#include "Core.h"
+#include "Utils.h"
 
 #include <glad/glad.h>
 
@@ -16,7 +16,7 @@ namespace Core {
     std::string filepath = base_path + std::string(filename);
     std::ifstream stream(filepath.c_str());
 
-    LOG_ASSERT(stream, "Cannot open a file: {0}!", filepath.c_str());
+    LOG_ASSERT(stream.is_open(), "Cannot open a file: {0}!", filepath.c_str());
 
     std::stringstream ss[2];
 
@@ -52,12 +52,12 @@ namespace Core {
     std::string vPath = base_path + std::string(vertexPath);
     std::ifstream vStream(vPath.c_str());
 
-    LOG_ASSERT(vStream, "Cannot open a file: {0}", vPath);
+    LOG_ASSERT(vStream.is_open(), "Cannot open a file: {0}", vPath);
 
     std::string fPath = base_path + std::string(fragmentPath);
     std::ifstream fStream(fPath.c_str());
 
-    LOG_ASSERT(fStream, "Cannot open a file: {0}", fPath);
+    LOG_ASSERT(fStream.is_open(), "Cannot open a file: {0}", fPath);
 
     std::stringstream ss[2];
     std::string line;

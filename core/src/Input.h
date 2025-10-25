@@ -3,8 +3,9 @@
 #include <memory>
 
 #include "events/EventDispatcher.h"
-#include "events/KeyEvent.h"
-#include "events/MouseEvent.h"
+#include "events/KeyEvents.h"
+#include "events/MouseEvents.h"
+#include "events/ApplicationEvents.h"
 
 namespace Core {
 
@@ -25,6 +26,11 @@ namespace Core {
     void mouseScrolledEvent(const MouseScrolledEvent& e);
     void mouseButtonPressedEvent(const MouseButtonPressedEvent& e);
     void mouseButtonReleasedEvent(const MouseButtonReleasedEvent& e);
+    void windowCloseEvent(const WindowCloseEvent& e);
+    void windowResizeEvent(const WindowResizeEvent& e);
+    void windowFocusEvent(const WindowFocusEvent& e);
+    void windowLostFocusEvent(const WindowLostFocusEvent& e);
+    void windowMovedEvent(const WindowMovedEvent& e);
   private:
     static std::unique_ptr<EventDispatcher> m_dispatcher;
   };

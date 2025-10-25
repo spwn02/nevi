@@ -3,7 +3,7 @@
 #include "platform/OpenGL/OpenGLWindow.h"
 
 #include "renderer/RendererAPI.h"
-#include "Core.h"
+#include "Utils.h"
 
 namespace Core {
 
